@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Kitob Javonlari</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: url('business.jpg') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .content {
+            margin: 20px;
+        }
+        .metro-map img {
+            width: 90%;
+            max-width: 600px;
+        }
+        .metro-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .metro-list h3 {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .book-list {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .scan-button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        video {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid black;
+            border-radius: 10px;
+            display: none;
+            margin-top: 20px;
+        }
+        #scan-result {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Xush kelibsiz qismi -->
+    <div class="hero">
+        Xush kelibsiz! Metro Kitob Javonlari
+    </div>
+
+    <div class="content">
+        <!-- Toshkent metropoliteni xaritasi -->
+        <h2>Toshkent Metropoliteni Xarita</h2>
+        <div class="metro-map">
+            <img src="metro-map.jpg" alt="Toshkent Metropoliteni Xarita">
+        </div>
+
+        <!-- Metro bekatlarining ro‘yxati va kitoblar -->
+        <h2>Metro bekatlaridagi mavjud kitoblar</h2>
+        <div class="metro-list">
+            <h3 onclick="toggleBooks('chilonzor')">Chilonzor</h3>
+            <div id="chilonzor" class="book-list">
+                <p>Deyl Karnegi - Do‘st orttirish va insonlarga ta’sir o‘tkazish</p>
+                <p>Napoleon Xill - O‘ylang va boy bo‘ling</p>
+                <p>Robert Kiyosaki - Boy ota, kambag‘al ota</p>
+            </div>
+
+            <h3 onclick="toggleBooks('beruniy')">Beruniy</h3>
+            <div id="beruniy" class="book-list">
+                <p>Jeyms Klir - Atom odatlar</p>
+                <p>Daniel Karnegi - Xavotirni tark etish san’ati</p>
+                <p>Simon Sinek - Nega boshlash kerak</p>
+            </div>
+
+            <!-- Yana metro bekatlarini qo‘shish mumkin -->
+        </div>
+
+        <!-- QR kod skanerlash tugmasi -->
+        <div class="scan-button" onclick="startScan()">📷 QR kodni skanerlash</div>
+        <video id="qr-video" autoplay></video>
+        <p id="scan-result">Natija bu yerda chiqadi...</p>
+    </div>
+
+    <script src="https://unpkg.com/qr-scanner/qr-scanner.min.js"></script>
+    <script>
+        function toggleBooks(id) {
+            let element = document.getElementById(id);
+            element.style.display = element.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function startScan() {
+            const video = document.getElementById('qr-video');
+            const resultDisplay = document.getElementById('scan-result');
+
+            video.style.display = 'block';
+
+            const qrScanner = new QrScanner(video, result => {
+                resultDisplay.textContent = 'Siz ' + result + ' bekatidan kitob oldingiz.';
+                video.style.display = 'none';
+                qrScanner.stop();
+            });
+
+            qrScanner.
+              start();
+        }
+    </script>
+
+</body>
+</html>
